@@ -1,3 +1,5 @@
+import numpy as np
+import cv2
 import random
 from PIL import Image
 
@@ -86,7 +88,7 @@ for x in range(new_width):
 # Сохранение полученного пиксель-арта
 pixel_art.save('pixel_art.jpg')
 """
-
+"""
 main_image = Image.open('2.jpg')
 # Масштабирование пиксель-арта до нужных размеров
 width, height = main_image.size
@@ -125,3 +127,52 @@ result = Image.alpha_composite(
 
 # Сохранение результата
 result.save('result_image.png')
+"""
+"""
+# Загрузка фото
+image = cv2.imread('1.jpg')
+
+# Определение размеров пиксель-арта
+pixel_size = 10
+
+# Масштабирование изображения
+height, width = image.shape[:2]
+new_width = width // pixel_size
+new_height = height // pixel_size
+resized_image = cv2.resize(image, (new_width, new_height))
+
+# Создание пустого холста для пиксель-арта
+pixel_art = np.zeros(
+    (new_height * pixel_size, new_width * pixel_size, 3), dtype=np.uint8)
+
+# Заполнение пиксель-арта
+for x in range(new_width):
+    for y in range(new_height):
+        rgb_values = resized_image[y, x]
+        pixel_art[y * pixel_size:(y + 1) * pixel_size,
+                  x * pixel_size:(x + 1) * pixel_size] = rgb_values
+
+# Сохранение полученного пиксель-арта
+cv2.imwrite('pixel_art.jpg', pixel_art)
+"""
+
+# Загрузка основного фото и пиксель-арта
+main_image = cv2.imread('1.jpg')
+pixel_art = cv2.imread('pixel_art.png', cv2.IMREAD_UNCHANGED)
+
+# Масштабирование пиксель-арта до размеров основного фото
+pixel_art = cv2.resize(pixel_art, (main_image.shape[1], main_image.shape[0]))
+
+# Извлечение альфа-канала из пиксель-арта (если есть)
+if pixel_art.shape[2] == 4:
+    alpha = pixel_art[:, :, 3]
+    alpha = alpha / 255.0
+    alpha = alpha[:, :, np.newaxis]
+else:
+    alpha = None
+
+# Наложение пиксель-арта на основное фото
+result = main_image * (1 - alpha) + pixel_art[:, :, :3] * alpha
+
+# Сохранение результата
+cv2.imwrite('result_image.jpg', result)
