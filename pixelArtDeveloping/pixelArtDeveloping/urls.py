@@ -19,11 +19,12 @@ from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
-from PixelArtGenerator.views import index, upload_image
+from PixelArtGenerator.views import index, upload_image, submit_rgb
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('upload', upload_image, name='upload_image'),
+    path('submit-rgb', submit_rgb, name='submit_rgb'),
     path('', index, name='index')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -9,7 +9,7 @@
         @change="handleFileUpload"
       />
     </label>
-    <button class="upload-form__button" @click="submitImage">Отправить</button>
+    <button class="upload-form__button" @click="Submit">Отправить</button>
     <div v-if="file" class="upload-form__preview">
       <img
         :src="previewUrl"
@@ -27,10 +27,17 @@ export default {
   data() {
     return {
       file: null,
+      red:0,
+      green:0,
+      blue:0,
       previewUrl: null,
     };
   },
   methods: {
+    Submit(){
+      this.submitImage()
+      this.submitRGB()
+    },
     handleFileUpload() {
       this.file = this.$refs.fileInput.files[0];
       this.previewUrl = URL.createObjectURL(this.file);
@@ -55,6 +62,29 @@ export default {
         .then((response) => {
           console.log(response.data);
           // Handle the successful response
+        })
+        .catch((error) => {
+          console.log(error);
+          // Handle the error
+        });
+    },
+    submitRGB() {
+      const data = {
+        red: document.getElementById("red").value,
+        green: document.getElementById("green").value,
+        blue: document.getElementById("blue").value,
+      };
+
+      const headers = {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      };
+
+      axios
+        .post("/submit-rgb", data, { headers })
+        .then((response) => {
+          console.log(response.data);
+          // Handle the successful RGB submission response
         })
         .catch((error) => {
           console.log(error);
