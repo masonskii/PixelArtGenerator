@@ -1,21 +1,62 @@
 <template>
-  <div class="upload-form">
-    <label class="upload-form__label" for="fileInput">
-      <span class="upload-form__label-text">Выберите изображение</span>
-      <input
-        id="fileInput"
-        type="file"
-        ref="fileInput"
-        @change="handleFileUpload"
-      />
-    </label>
-    <button class="upload-form__button" @click="Submit">Отправить</button>
-    <div v-if="file" class="upload-form__preview">
-      <img
-        :src="previewUrl"
-        :alt="file.name"
-        class="upload-form__preview-image"
-      />
+  <div>
+    <div class="rgb-picker">
+      <div class="color-preview" :style="colorPreviewStyle"></div>
+      <div class="controls">
+        <label for="red">Red:</label>
+        <input
+          id="red"
+          type="number"
+          min="0"
+          max="255"
+          v-model="red"
+          @input="updateColor"
+        />
+      </div>
+      <div class="controls">
+        <label for="green">Green:</label>
+        <input
+          id="green"
+          type="number"
+          min="0"
+          max="255"
+          v-model="green"
+          @input="updateColor"
+        />
+      </div>
+      <div class="controls">
+        <label for="blue">Blue:</label>
+        <input
+          id="blue"
+          type="number"
+          min="0"
+          max="255"
+          v-model="blue"
+          @input="updateColor"
+        />
+      </div>
+    </div>
+    <div class="upload-form">
+      <label class="upload-form__label" for="fileInput">
+        <span class="upload-form__label-text">Выберите изображение</span>
+        <input
+          id="fileInput"
+          type="file"
+          ref="fileInput"
+          @change="handleFileUpload"
+        />
+      </label>
+      <button class="upload-form__button" @click="Submit">Отправить</button>
+      <div v-if="file" class="upload-form__preview">
+        <img
+          :src="previewUrl"
+          :alt="file.name"
+          class="upload-form__preview-image"
+        />
+      </div>
+    </div>
+    <div>
+      <img :src="imageUrl" alt="Image">
     </div>
   </div>
 </template>
@@ -27,16 +68,25 @@ export default {
   data() {
     return {
       file: null,
-      red:0,
-      green:0,
-      blue:0,
+      red: 0,
+      green: 0,
+      blue: 0,
       previewUrl: null,
+      imageUrl: "",
     };
   },
+  computed: {
+    colorPreviewStyle() {
+      console.log(this.red, this.green, this.blue);
+      return {
+        backgroundColor:
+          "rgb(" + this.red + ", " + this.green + ", " + this.blue + ")",
+      };
+    },
+  },
   methods: {
-    Submit(){
-      this.submitImage()
-      this.submitRGB()
+    Submit() {
+      this.submitImage();
     },
     handleFileUpload() {
       this.file = this.$refs.fileInput.files[0];
@@ -50,7 +100,9 @@ export default {
 
       const formData = new FormData();
       formData.append("image", this.file);
-
+      formData.append("r", this.red);
+      formData.append("g", this.green);
+      formData.append("b", this.blue);
       // Execute the AJAX request to the Django server for image processing
       axios
         .post("/upload", formData, {
@@ -60,35 +112,12 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
-          // Handle the successful response
+          console.log(response);
+          this.imageUrl = URL.createObjectURL(new Blob([response.data]))
         })
         .catch((error) => {
-          console.log(error);
-          // Handle the error
-        });
-    },
-    submitRGB() {
-      const data = {
-        red: document.getElementById("red").value,
-        green: document.getElementById("green").value,
-        blue: document.getElementById("blue").value,
-      };
-
-      const headers = {
-        "Content-Type": "application/json",
-        "X-CSRFToken": getCookie("csrftoken"),
-      };
-
-      axios
-        .post("/submit-rgb", data, { headers })
-        .then((response) => {
-          console.log(response.data);
-          // Handle the successful RGB submission response
-        })
-        .catch((error) => {
-          console.log(error);
-          // Handle the error
+          console.error(error);
+          alert("Произошла ошибка при загрузке изображения");
         });
     },
   },
@@ -156,5 +185,33 @@ function getCookie(name) {
 .upload-form__preview-image {
   max-width: 100%;
   border-radius: 4px;
+}
+
+.rgb-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-preview {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 1rem;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  align-items: center;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
 }
 </style>

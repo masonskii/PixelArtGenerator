@@ -1,17 +1,16 @@
-<!DOCTYPE html> {% load static %}
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta
-      charset="utf-8"
-      name="viewport"
-      content="width=device-width,initial-scale=1.0"
-    />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  </head>
 
-  <body>
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
     <noscript>
       <strong
         >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
@@ -19,13 +18,9 @@
         continue.</strong
       >
     </noscript>
-    <div id="rgb">
-      <app></app>
-    </div>
     <div id="app">
-      <app></app>
+        <app></app>
     </div>
+</body>
 
-    <script src="{% static 'myapp/main.js' %}"></script>
-  </body>
 </html>
