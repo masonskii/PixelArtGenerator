@@ -110,10 +110,11 @@ export default {
             "Content-Type": "multipart/form-data",
             "X-CSRFToken": getCookie("csrftoken"),
           },
+          responseType: 'blob', // Add this option to handle the binary data
         })
         .then((response) => {
           console.log(response);
-          this.imageUrl = URL.createObjectURL(new Blob([response.data]))
+          this.imageUrl = URL.createObjectURL(response.data)
         })
         .catch((error) => {
           console.error(error);

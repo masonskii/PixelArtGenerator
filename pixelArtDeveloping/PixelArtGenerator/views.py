@@ -44,7 +44,7 @@ def upload_image(request):
         image_path ='C:\\Users\\user37\\Desktop\\VSCodeProject\\project2\\pixelArtDeveloping\\result.png'
         with open(image_path, 'rb') as f:
             response = HttpResponse(f.read(), content_type='image/png')
-            response['Content-Disposition'] = 'inline; filename=image.jpg'
+            response['Content-Disposition'] = 'inline; filename=result.png'
             return response
     return JsonResponse({'success': False})
 
