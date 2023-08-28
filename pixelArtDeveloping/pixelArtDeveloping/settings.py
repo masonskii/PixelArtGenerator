@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '../static/')
 
 STATICFILES_DIRS = [
-    "C:/Users/user37/Desktop/VSCodeProject/project2/pixelArtDeveloping/static"]
+     os.path.join(BASE_DIR, 'static')]
 STATICFILES_FINDERS = (
 
     'django.contrib.staticfiles.finders.FileSystemFinder',

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="block-editor">
     <div class="rgb-picker">
       <div class="color-preview" :style="colorPreviewStyle"></div>
       <div class="controls">
@@ -54,9 +54,9 @@
           class="upload-form__preview-image"
         />
       </div>
-      <div class="preview-image">
-        <img :src="imageUrl" class="image">
-      </div>
+    </div>
+    <div class="preview-image">
+      <img :src="imageUrl" class="image">
     </div>
   </div>
 </template>
@@ -141,6 +141,14 @@ function getCookie(name) {
 }
 </script>
 <style scoped>
+.block-editor{
+  background-color: #fff;  
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  margin-top:10%;
+  margin-right: 5%;
+}
 .upload-form {
   width: 400px;
   margin: 0 auto;
@@ -234,12 +242,10 @@ input {
 }
 .preview-image {
   position: relative;
-  max-width: 400px;
-  border: 5px solid;
+  max-width: 200px;
 }
 
 .image {
-  --angle: 0deg;
   width: 100%;
   height: auto;
   border-radius: 8px;
