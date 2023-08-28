@@ -140,9 +140,16 @@ function getCookie(name) {
   return cookieValue;
 }
 </script>
-<style scoped>
+<style>
+body {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to bottom, hsl(276, 89%, 74%), #a1f1c2);
+  background-repeat: no-repeat;
+  color: #333;
+}
 .block-editor{
-  background-color: #fff;  
+  position:relative;
   width: 100%;
   height: 50vh;
   display: flex;
@@ -150,10 +157,25 @@ function getCookie(name) {
   margin-right: 5%;
 }
 .upload-form {
-  width: 400px;
+  width: 30%;
+  max-width: 33%;
   margin: 0 auto;
 }
-
+.upload-form:hover{
+  transform: scale(1.3) ;
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
+}
 .upload-form__label {
   display: block;
   margin-bottom: 1rem;
@@ -209,29 +231,70 @@ function getCookie(name) {
 }
 
 .rgb-picker {
+  width: 30%;
+  max-width: 33%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
+.rgb-picker:hover{
+  transform: scale(1.3) ;
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
+}
 .color-preview {
   width: 200px;
   height: 200px;
   margin-bottom: 1rem;
 }
 .color-preview:hover{
+  transform: scale(1.3) ;
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
   -webkit-transition: all 0.3s ease;;
   -moz-transition: all 0.3s ease;;
   -o-transition: all 0.3s ease;;
   transition: all 0.3s ease;
 }
 .controls {
+  margin-bottom: 25px;
+  position:relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
   align-items: center;
 }
-
+.controls:hover{
+  transform: scale(1.3) ;
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
+}
 label {
   font-weight: bold;
 }
@@ -241,10 +304,25 @@ input {
   padding: 0.5rem;
 }
 .preview-image {
+  width: 30%;
   position: relative;
-  max-width: 200px;
+  max-width: 33%;
 }
-
+.preview-image:hover{
+  transform: scale(1.3) ;
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
+}
 .image {
   width: 100%;
   height: auto;
