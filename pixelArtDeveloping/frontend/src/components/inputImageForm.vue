@@ -46,7 +46,7 @@
           @change="handleFileUpload"
         />
       </label>
-      <button class="upload-form__button" @click="Submit">Отправить</button>
+      <button class="upload-form__button" @click="Submit" :style="colorPreviewStyle">Отправить</button>
       <div v-if="file" class="upload-form__preview">
         <img
           :src="previewUrl"
@@ -54,9 +54,9 @@
           class="upload-form__preview-image"
         />
       </div>
-    </div>
-    <div>
-      <img :src="imageUrl" alt="Image">
+      <div class="preview-image">
+        <img :src="imageUrl" class="image">
+      </div>
     </div>
   </div>
 </template>
@@ -166,7 +166,7 @@ function getCookie(name) {
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
-  background-color: #007bff;
+  border-radius: 20px;
   border: none;
   color: #fff;
   text-align: center;
@@ -176,7 +176,19 @@ function getCookie(name) {
 }
 
 .upload-form__button:hover {
-  background-color: #0056b3;
+  background-color: hsl(276, 79%, 69%);
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
 }
 
 .upload-form__preview {
@@ -199,7 +211,12 @@ function getCookie(name) {
   height: 200px;
   margin-bottom: 1rem;
 }
-
+.color-preview:hover{
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
+}
 .controls {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -214,5 +231,33 @@ label {
 input {
   width: 100%;
   padding: 0.5rem;
+}
+.preview-image {
+  position: relative;
+  max-width: 400px;
+  border: 5px solid;
+}
+
+.image {
+  --angle: 0deg;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.image:hover{
+  transform: scale(1.3) ;
+  box-shadow:
+    1px 1px hsl(276, 79%, 69%),
+    3px 3px #53ea93,
+    5px 5px hsl(276, 79%, 69%),
+    7px 7px #53ea93,
+    9px 9px hsl(276, 79%, 69%);
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  -webkit-transition: all 0.3s ease;;
+  -moz-transition: all 0.3s ease;;
+  -o-transition: all 0.3s ease;;
+  transition: all 0.3s ease;
 }
 </style>
