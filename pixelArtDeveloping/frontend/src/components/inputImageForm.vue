@@ -3,10 +3,11 @@
     <div class="rgb-picker">
       <div class="color-preview" :style="colorPreviewStyle"></div>
       <div class="controls">
-        <label for="red">Red:</label>
+        <label for="red">Red:</label><div>{{red}}</div>
         <input
           id="red"
-          type="number"
+          value='0'
+          type="range"
           min="0"
           max="255"
           v-model="red"
@@ -14,10 +15,11 @@
         />
       </div>
       <div class="controls">
-        <label for="green">Green:</label>
+        <label for="green">Green:</label><div>{{green}}</div>
         <input
           id="green"
-          type="number"
+          type="range"
+          value='0'
           min="0"
           max="255"
           v-model="green"
@@ -25,16 +27,20 @@
         />
       </div>
       <div class="controls">
-        <label for="blue">Blue:</label>
+        <label for="blue">Blue:</label><div>{{blue}}</div>
         <input
           id="blue"
-          type="number"
+          type="range"
           min="0"
+          value='0'
           max="255"
           v-model="blue"
           @input="updateColor"
         />
       </div>
+      <div>{{rgbStr}}</div>
+      <div>{{hex}}</div>
+      <div>{{hsl}}</div>
     </div>
     <div class="upload-form">
       <label class="upload-form__label" for="fileInput">
@@ -83,10 +89,30 @@ export default {
           "rgb(" + this.red + ", " + this.green + ", " + this.blue + ")",
       };
     },
+    rgbStr() {
+      return "rgb(" + this.red + ", " + this.green + ", " + this.blue + ")";
+    },
+    hex() {
+      return this.rgbToHex(this.r, this.g, this.b);
+    },
+    hsl() {
+      return this.rgbToHsl(this.r, this.g, this.b);
+    },
   },
   methods: {
     Submit() {
       this.submitImage();
+    },
+    updateColors() {
+      this.rgbStr; // Triggers reactivity for color display
+    },
+    rgbToHex(r, g, b) {
+      // Convert RGB to HEX string
+      return '#' + rgbToHex(r, g, b)
+    },
+    rgbToHsl(r, g, b) {
+      let v = convertRgbToHsl(r,g,b);
+      return "hsl: ("+ v[0] + "%, "+ v[1] + "%, " + v[2] +"%)"
     },
     handleFileUpload() {
       this.file = this.$refs.fileInput.files[0];
@@ -123,7 +149,50 @@ export default {
     },
   },
 };
+function rgbToHex(r, g, b) {
+  const componentToHex = (c) => {
+    const hex = c.toString(16);
+    return hex.length === 1 ? "0" + hex : hex;
+  };
+  
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+function convertRgbToHsl(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
 
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+
+    h /= 6;
+  }
+
+  h = Math.round(h * 360);
+  s = Math.round(s * 100);
+  l = Math.round(l * 100);
+
+  return [ h, s, l ];
+}
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
