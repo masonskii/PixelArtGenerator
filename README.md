@@ -1,5 +1,3 @@
-Sure, I can help you with that. Here is the README.md file for your code:
-
 ## Pixel Art Generator
 
 This repository contains a Python script that can be used to generate pixel art from an image. The script works by first downscaling the image to a smaller size, then creating a new image with the same dimensions as the original image. The new image is then filled with random colors, and the colors of the original image are used to create a pixelated effect.
